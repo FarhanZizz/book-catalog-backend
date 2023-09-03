@@ -26,8 +26,23 @@ const getSingleCategory = async (id: string): Promise<ICategory | null> => {
   return categoryWithBooks;
 };
 
+const updateCategory = async (
+  id: string,
+  payload: Partial<ICategory>
+): Promise<ICategory | null> => {
+  const updatedCategory = await prisma.category.update({
+    where: {
+      id,
+    },
+    data: payload,
+  });
+
+  return updatedCategory;
+};
+
 export const CategoryService = {
   createCategory,
   getAllCategories,
   getSingleCategory,
+  updateCategory,
 };

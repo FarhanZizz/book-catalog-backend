@@ -20,5 +20,10 @@ router.get(
   auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.CUSTOMER),
   CategoryController.getSingleCategory
 );
+router.patch(
+  '/categories/:id',
+  auth(ENUM_USER_ROLE.ADMIN),
+  CategoryController.updateCategory
+);
 
 export const CategoryRoutes = router;
