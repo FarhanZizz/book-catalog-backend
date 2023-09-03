@@ -50,8 +50,64 @@ const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const getSingleUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const id = req.params.id;
+    const result = await UserService.getSingleUser(id);
+
+    return res.status(httpStatus.OK).json({
+      success: true,
+      statusCode: httpStatus.OK,
+      message: 'User retrieved successfully',
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const updateUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const id = req.params.id;
+    const updatedData = req.body;
+    const result = await UserService.updateUser(id, updatedData);
+
+    return res.status(httpStatus.OK).json({
+      success: true,
+      statusCode: httpStatus.OK,
+      message: 'User updated successfully',
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const id = req.params.id;
+    const result = await UserService.deleteUser(id);
+
+    return res.status(httpStatus.OK).json({
+      success: true,
+      statusCode: httpStatus.OK,
+      message: 'User deleted successfully',
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const UserController = {
   createUser,
   loginUser,
   getAllUsers,
+  getSingleUser,
+  updateUser,
+  deleteUser,
 };
