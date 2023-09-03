@@ -46,7 +46,14 @@ const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
   return { accessToken };
 };
 
+const getAllUsers = async (): Promise<IUser[]> => {
+  const allUsers = await prisma.user.findMany();
+
+  return allUsers;
+};
+
 export const UserService = {
   createUser,
   loginUser,
+  getAllUsers,
 };
