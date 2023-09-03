@@ -1,11 +1,9 @@
-import { PrismaClient } from '@prisma/client';
 import httpStatus from 'http-status';
 import jwt, { Secret } from 'jsonwebtoken';
+import { prisma } from '../../app';
 import config from '../../config';
 import ApiError from '../../errors/ApiError';
 import { ILoginUser, ILoginUserResponse, IUser } from './user.interface';
-
-const prisma = new PrismaClient();
 
 const createUser = async (user: IUser): Promise<IUser | null> => {
   const createdUser = await prisma.user.create({
