@@ -34,8 +34,22 @@ const getAllOrders = async (
   });
   return result;
 };
+const getSingleOrder = async (
+  role: string,
+  id: string,
+  orderID: string
+): Promise<IOrder | null> => {
+  const result = await prisma.order.findUnique({
+    where: role === 'admin' ? { id: orderID } : { userId: id, id: orderID },
+    include: {
+      orderedBooks: true,
+    },
+  });
+  return result;
+};
 
 export const OrderService = {
   createOrder,
   getAllOrders,
+  getSingleOrder,
 };

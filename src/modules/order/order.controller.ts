@@ -40,8 +40,32 @@ const getAllOrders = async (
     return next(error);
   }
 };
+const getSingleOrder = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const orderID = req.params.id;
+    const result = await OrderService.getSingleOrder(
+      req?.user?.role,
+      req?.user?.id,
+      orderID
+    );
+
+    return res.status(httpStatus.OK).json({
+      success: true,
+      statusCode: httpStatus.OK,
+      message: 'Order fetched successfully',
+      data: result,
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
 
 export const OrderController = {
   createOrder,
   getAllOrders,
+  getSingleOrder,
 };
