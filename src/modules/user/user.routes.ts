@@ -7,6 +7,11 @@ const router = express.Router();
 
 router.post('/auth/signup', UserController.createUser);
 router.get('/auth/signin', UserController.loginUser);
+router.get(
+  '/profile',
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.CUSTOMER),
+  UserController.getProfile
+);
 router.patch(
   '/users/:id',
   auth(ENUM_USER_ROLE.ADMIN),
