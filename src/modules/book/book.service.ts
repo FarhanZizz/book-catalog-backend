@@ -76,6 +76,41 @@ const getAllBooks = async (
     data: books,
   };
 };
+
+const getSingleBook = async (id: string): Promise<IBook | null> => {
+  const book = await prisma.book.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  return book;
+};
+
+const updateBook = async (
+  id: string,
+  payload: Partial<IBook>
+): Promise<IBook | null> => {
+  const updatedBook = await prisma.book.update({
+    where: {
+      id,
+    },
+    data: payload,
+  });
+
+  return updatedBook;
+};
+
+const deleteBook = async (id: string): Promise<IBook | null> => {
+  const deletedBook = await prisma.book.delete({
+    where: {
+      id,
+    },
+  });
+
+  return deletedBook;
+};
+
 const getCatgoryBooks = async (
   categoryid: string,
   paginationFields: IBookPaginationOptions
@@ -120,4 +155,7 @@ export const BookService = {
   createBook,
   getAllBooks,
   getCatgoryBooks,
+  getSingleBook,
+  updateBook,
+  deleteBook,
 };
