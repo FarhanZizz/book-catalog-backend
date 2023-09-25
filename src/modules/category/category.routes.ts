@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post(
   '/categories/create-category',
-  auth(ENUM_USER_ROLE.ADMIN),
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.CUSTOMER),
   CategoryController.createCategory
 );
 router.get(

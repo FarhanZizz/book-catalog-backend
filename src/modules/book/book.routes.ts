@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post(
   '/books/create-book',
-  auth(ENUM_USER_ROLE.ADMIN),
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.CUSTOMER),
   BookController.createBook
 );
 router.get(
