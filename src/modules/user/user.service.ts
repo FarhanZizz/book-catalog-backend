@@ -3,7 +3,7 @@ import jwt, { Secret } from 'jsonwebtoken';
 import { prisma } from '../../app';
 import config from '../../config';
 import ApiError from '../../errors/ApiError';
-import { ILoginUser, ILoginUserResponse, IUser } from './user.interface';
+import { ILoginUser, IUser } from './user.interface';
 
 const createUser = async (user: IUser): Promise<IUser | null> => {
   const createdUser = await prisma.user.create({
@@ -16,7 +16,7 @@ const createUser = async (user: IUser): Promise<IUser | null> => {
   return newUser;
 };
 
-const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
+const loginUser = async (payload: ILoginUser): Promise<string> => {
   const { email, password } = payload;
 
   // Find the user using Prisma
@@ -37,11 +37,11 @@ const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
 
   // Create an access token
   const { id, role } = user;
-  const accessToken = jwt.sign({ id, role }, config.jwt.secret as Secret, {
+  const token = jwt.sign({ id, role }, config.jwt.secret as Secret, {
     expiresIn: config.jwt.expires_in,
   });
 
-  return { accessToken };
+  return  token ;
 };
 
 const getAllUsers = async (): Promise<IUser[]> => {
